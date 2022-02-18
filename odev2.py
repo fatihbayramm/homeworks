@@ -1,4 +1,5 @@
 class Animal:
+
     def __init__(self, name):
         self.name = name
     
@@ -22,12 +23,15 @@ class Dog(Animal):
 
 
 
+
 c = Cat("animal")
 c.sound()
 cw = Cow("animal")
 cw.sound()
 d = Dog("animal")
 d.sound()
+
+
 
 
 

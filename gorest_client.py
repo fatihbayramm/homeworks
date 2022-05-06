@@ -4,19 +4,19 @@ import requests
 class Client:
     def __init__(self, token):
         self.token = token
-        self.url = "https://gorest.co.in/public/v2/users/"
+        self.base_url = "https://gorest.co.in/public/v2/users/"
 
     def get_users(self):
-        response = requests.get("https://gorest.co.in/public/v2/users/")
+        response = requests.get(f"{self.base_url}")
         return response.content
 
     def get_user(self, idn):
-        response = requests.get(f"https://gorest.co.in/public/v2/users/{idn}")
+        response = requests.get(f"{self.base_url}{idn}")
         return response.content
 
     def create_user(self, name, email, gender, status):
         response = requests.post(
-            "https://gorest.co.in/public/v2/users/",
+            f"{self.base_url}",
             data={
                 "name": name,
                 "email": email,
@@ -27,13 +27,13 @@ class Client:
         )
         if response.status_code == 201:
             return response.json()
-        else:
-            print(f"Error, {response.status_code}, \n{response.content} ")
-            return False
+
+        print(f"Error, {response.status_code}, \n{response.content} ")
+        return False
 
     def update_user(self, idn, newname, newemail, newgender, newstatus):
         response = requests.put(
-            f"https://gorest.co.in/public/v2/users/{idn}",
+            f"{self.base_url}{idn}",
             data={
                 "name": newname,
                 "email": newemail,
@@ -44,13 +44,13 @@ class Client:
         )
         if response.status_code == 200:
             return response.json()
-        else:
-            print(f"Error, {response.status_code}, \n{response.content} ")
-            return False
+
+        print(f"Error, {response.status_code}, \n{response.content} ")
+        return False
 
     def delete_user(self, idn):
         response = requests.delete(
-            f"https://gorest.co.in/public/v2/users/{idn}",
+            f"{self.base_url}{idn}",
             headers={"Authorization": f"Bearer {self.token}"},
         )
         if response.status_code == 204:
